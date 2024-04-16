@@ -13,6 +13,7 @@ import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { signIn } from "next-auth/react"
 import { useRef } from "react"
+import Link from "next/link"
 
 export default function Page() {
   const emailRef = useRef<string>("")
@@ -59,6 +60,9 @@ export default function Page() {
         </div>
       </CardContent>
       <CardFooter className="flex items-center justify-end gap-3">
+        <Link href="/register">
+          <Button>Register</Button>
+        </Link>
         <Button onClick={handleLogin}>Login</Button>
       </CardFooter>
     </Card>
