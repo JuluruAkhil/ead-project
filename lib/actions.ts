@@ -16,3 +16,11 @@ export async function isManagerFromEmail(email: string) {
   })
   return user?.isManager
 }
+
+export async function isAdminFromEmail(email: string) {
+  const user = await prisma.user.findFirst({
+    where: { email: email },
+    select: { isAdmin: true },
+  })
+  return user?.isAdmin
+}
