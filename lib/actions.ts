@@ -12,7 +12,7 @@ export async function getIdfromEmail(email: string) {
 export async function isManagerFromEmail(email: string) {
   const user = await prisma.user.findFirst({
     where: { email: email },
-    select: { managerId: true },
+    select: { isManager: true },
   })
-  return user?.managerId
+  return user?.isManager
 }

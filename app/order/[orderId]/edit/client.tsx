@@ -208,6 +208,7 @@ export default function Client({
               </SelectContent>
             </Select>
           </div>
+
           {orderData.status === "rejected" && (
             <div>
               <Label className="text-sm" htmlFor="reason">

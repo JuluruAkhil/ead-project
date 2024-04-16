@@ -5,6 +5,7 @@ import { isManagerFromEmail } from "@/lib/actions"
 import prisma from "@/lib/db"
 import { getServerSession } from "next-auth"
 import { redirect } from "next/navigation"
+import { stat } from "fs"
 
 export async function getItems() {
   const items = await prisma.item.findMany({
@@ -61,6 +62,7 @@ export async function isLoggedInManager() {
 }
 
 export async function editAction(formData: FormData) {
+  console.log(formData)
   const orderId = formData.get("orderId") as string
   const customerId = formData.get("customer") as string
   const salesRepId = formData.get("salesRep") as string
@@ -69,8 +71,23 @@ export async function editAction(formData: FormData) {
   const pricePerItem = parseFloat(formData.get("price") as string)
   const status = formData.get("status") as string
   const rejectionReason = formData.get("reason") as string
+  console.log(status, rejectionReason)
+  const order = await prisma.order.findUnique({
+    where: { id: orderId },
+    include: {
+      salesRep: {
+        select: {
+          id: true,
+          email: true,
+          managerId: true,
+        },
+      },
+      customer: { select: { name: true } },
+      item: { select: { name: true } },
+    },
+  })
 
-  const order = await prisma.order.update({
+  const updatedOrder = await prisma.order.update({
     where: { id: orderId },
     data: {
       customerId: customerId,
@@ -78,9 +95,11 @@ export async function editAction(formData: FormData) {
       itemId: itemId,
       itemQuantity: quantity,
       pricePerItem: pricePerItem,
-      status: status,
-      rejectionReason: rejectionReason === "" ? null : rejectionReason,
+      status: status === null ? order.status : status,
+      rejectionReason:
+        rejectionReason === null ? order.rejectionReason : rejectionReason,
     },
   })
-  redirect(`/manager/sales-rep/${order.salesRepId}`)
+
+  redirect(`/manager/sales-rep/${updatedOrder.salesRepId}`)
 }
