@@ -22,6 +22,7 @@ export async function getSalesRepsData(managerId) {
         NOT: {
           id: managerId,
         },
+        isManager: false,
       },
     },
     include: {
