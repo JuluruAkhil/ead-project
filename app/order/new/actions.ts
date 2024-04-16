@@ -3,7 +3,7 @@
 import prisma from "@/lib/db"
 import { redirect } from "next/navigation"
 import { getServerSession } from "next-auth"
-import { authOptions } from "@/app/api/auth/[...nextauth]/route"
+import { authOptions } from "@/lib/authOptions"
 import { getIdfromEmail } from "@/lib/actions"
 
 export async function getItems() {
