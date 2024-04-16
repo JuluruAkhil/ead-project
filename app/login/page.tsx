@@ -59,9 +59,9 @@ export default function Page() {
           />
         </div>
       </CardContent>
-      <CardFooter className="flex items-center justify-end gap-3">
+      <CardFooter className="flex items-center justify-between md:justify-end md:gap-6">
         <Link href="/register">
-          <Button>Register</Button>
+          <Button>Registration Page</Button>
         </Link>
         <Button onClick={handleLogin}>Login</Button>
       </CardFooter>
