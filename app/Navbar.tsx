@@ -19,7 +19,7 @@ export default async function NavBar() {
   const isAdmin = await isAdminFunc()
   return (
     <nav className="flex items-center h-14 px-4 border-b gap-4 lg:gap-6">
-      <Link className="text-lg font-bold" href="#">
+      <Link className="text-lg font-bold" href="/">
         Sales Inc
       </Link>
       <NavBarButtons isAdmin={isAdmin} />
