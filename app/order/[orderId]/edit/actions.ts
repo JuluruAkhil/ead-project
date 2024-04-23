@@ -1,11 +1,11 @@
 "use server"
 
 import { authOptions } from "@/lib/authOptions"
-import { isManagerFromEmail } from "@/lib/actions"
+import { isManagerFromEmail, sendEmail } from "@/lib/actions"
 import prisma from "@/lib/db"
 import { getServerSession } from "next-auth"
 import { redirect } from "next/navigation"
-import { stat } from "fs"
+import nodemailer from "nodemailer"
 
 export async function getItems() {
   const items = await prisma.item.findMany({
@@ -100,6 +100,12 @@ export async function editAction(formData: FormData) {
         rejectionReason === null ? order.rejectionReason : rejectionReason,
     },
   })
+
+  await sendEmail(
+    order.salesRep.email,
+    "Order Updated",
+    `A order has been updated. Please review the order details.`
+  )
 
   redirect(`/manager/sales-rep/${updatedOrder.salesRepId}`)
 }

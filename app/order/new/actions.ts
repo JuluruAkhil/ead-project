@@ -4,7 +4,11 @@ import prisma from "@/lib/db"
 import { redirect } from "next/navigation"
 import { getServerSession } from "next-auth"
 import { authOptions } from "@/lib/authOptions"
-import { getIdfromEmail } from "@/lib/actions"
+import {
+  getIdfromEmail,
+  getManagerEmailFromEmployeeEmail,
+  sendEmail,
+} from "@/lib/actions"
 
 export async function getItems() {
   const items = await prisma.item.findMany()
@@ -39,6 +43,16 @@ export async function createSalesOrder(formData: FormData) {
       status: "pending",
     },
   })
+
+  const managerEmail = await getManagerEmailFromEmployeeEmail(
+    session.user.email
+  )
+
+  await sendEmail(
+    managerEmail,
+    "Order Created",
+    `A order has been created by ${session.user.email}. Please review the order details.`
+  )
 
   redirect("/")
 }

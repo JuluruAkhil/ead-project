@@ -1,8 +1,3 @@
-/**
- * v0 by Vercel.
- * @see https://v0.dev/t/demFVwS8nys
- * Documentation: https://v0.dev/docs#integrating-generated-code-into-your-nextjs-app
- */
 import Link from "next/link"
 import { Switch } from "@/components/ui/switch"
 import { Button } from "@/components/ui/button"
@@ -21,8 +16,11 @@ export default function Client({ salesRepData, toggleIsManagerAction }) {
     <div className="flex flex-col w-full min-h-screen">
       <main className="flex min-h-[calc(100vh_-_theme(spacing.16))] flex-1 flex-col">
         <Card>
-          <CardHeader className="flex flex-row items-center justify-between pb-2 space-y-0">
+          <CardHeader className="flex flex-row  items-center justify-between pb-2 space-y-0">
             <CardTitle>Sales Rep List</CardTitle>
+            <Link href="/admin/dashboard">
+              <Button>Dashboard</Button>
+            </Link>
           </CardHeader>
           <CardContent className="p-0">
             <div className="overflow-auto">
