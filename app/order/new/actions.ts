@@ -49,7 +49,7 @@ export async function createSalesOrder(formData: FormData) {
   )
 
   await sendEmail(
-    managerEmail,
+    managerEmail ?? "akhil.juluru@gmail.com",
     "Order Created",
     `A order has been created by ${session.user.email}. Please review the order details.`
   )
